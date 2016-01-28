@@ -21,10 +21,60 @@ namespace WSAD_App1.Controllers
         /// </summary>
         /// <returns>ViewResult for the create</returns>
 
-
+        [HttpGet]
         public ActionResult Create()
-        {
+        { 
             return View();
+        }
+        [HttpPost]
+        public ActionResult Create(CreateUserViewModel createUser)
+        {
+            if (createUser == null)
+            {
+                ModelState.AddModelError("","Please enter the required fields, first name, last name, username, password and email.");
+                return View();
+            }
+            if (string.IsNullOrWhiteSpace(createUser.firstName))
+            {
+                ModelState.AddModelError("", "First Name is required");
+                return View();
+            }
+            if (string.IsNullOrWhiteSpace(createUser.lastName))
+            {
+                ModelState.AddModelError("", "Last name is required");
+                return View();
+            }
+            if (string.IsNullOrWhiteSpace(createUser.emailAddress))
+            {
+                ModelState.AddModelError("", "Email address is required");
+                return View();
+            }
+            if (string.IsNullOrWhiteSpace(createUser.Username))
+            {
+                ModelState.AddModelError("", "Username is required");
+                return View();
+            }
+            if (string.IsNullOrWhiteSpace(createUser.Password))
+            {
+                ModelState.AddModelError("", "Password is required");
+                return View();
+
+            }
+            if (string.IsNullOrWhiteSpace(createUser.PasswordConfirm))
+            {
+                ModelState.AddModelError("", "Password Confirmation is required");
+                return View();
+
+            }
+            if (createUser.PasswordConfirm != createUser.Password)
+            {
+                ModelState.AddModelError("", "Oops! Password does not match password confirmation.");
+                return View();
+            }
+            return Content("Hello " + createUser.firstName + " " + createUser.lastName + 
+                "! Welcome to our site. " + "Username:" + createUser.Username + "Password: " +
+                createUser.Password + "Email: " + createUser.emailAddress
+                );
         }
         /// <summary>
         /// Logging users into the web site
