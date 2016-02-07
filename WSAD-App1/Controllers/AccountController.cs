@@ -106,13 +106,33 @@ namespace WSAD_App1.Controllers
 
             }
             // open database connection
-            //hash password
-            //query for user based on username and password hash
+            bool isValid = false;
+            using (WSADDbContext context = new WSADDbContext())
+            {
+                //hash password
+                //query for user based on username and password hash
+                if (context.Users.Any(
+                    row => row.Username.Equals(loginUser.Username)
+                    && row.Password.Equals(loginUser.Password)
+                    ))
+                {
+                    isValid = true;
+                }
+            }
             //if invalid, send error
-            //valid, redirect to user profile
-            System.Web.Security.FormsAuthentication.SetAuthCookie(loginUser.Username, loginUser.RememberMe);
+            if (!isValid)
+            {
+                ModelState.AddModelError("", "Invalid username or password.");
+                return View();
+            }
+            else {
+                //valid, redirect to user profile
 
-            return Redirect(FormsAuthentication.GetRedirectUrl(loginUser.Username, loginUser.RememberMe));
+                System.Web.Security.FormsAuthentication.SetAuthCookie(loginUser.Username, loginUser.RememberMe);
+                return Redirect(FormsAuthentication.GetRedirectUrl(loginUser.Username, loginUser.RememberMe));
+
+            }
+            
         }
       
     }
