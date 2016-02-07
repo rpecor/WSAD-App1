@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,14 +8,29 @@ namespace WSAD_App1.Models.ViewModels.Account
 {
     public class CreateUserViewModel
     {
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string emailAddress { get; set; }
-        public string gender { get; set; }
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
+        [Required]
+        public string EmailAddress { get; set; }
+
+        [Required]
+        public string Gender { get; set; }
+
+        [Required]
         public string Username { get; set; }
+
+        [Required]
         public string Password { get; set; }
+
+        [Required]
         public string PasswordConfirm { get; set; }
-        public bool recieveEmails { get; set; }
+
+
+        public bool RecieveEmails { get; set; }
 
     }
 }

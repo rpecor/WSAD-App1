@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using WSAD_App1.Models.Data;
 using WSAD_App1.Models.ViewModels.Account;
+using WSAD_App1.Models.ViewModels.Correspondence;
 
 namespace WSAD_App1.Controllers
 {
@@ -27,54 +29,49 @@ namespace WSAD_App1.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(CreateUserViewModel createUser)
+        public ActionResult Create(CreateUserViewModel newUser)
         {
-            if (createUser == null)
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("","Please enter the required fields, first name, last name, username, password and email.");
-                return View();
+                return View(newUser);
             }
-            if (string.IsNullOrWhiteSpace(createUser.firstName))
+            if (!newUser.Password.Equals(newUser.PasswordConfirm))
             {
-                ModelState.AddModelError("", "First Name is required");
-                return View();
+                ModelState.AddModelError("", "Password does not match password confirm.");
+                return View(newUser);
             }
-            if (string.IsNullOrWhiteSpace(createUser.lastName))
+
+            using (WSADDbContext context = new WSADDbContext())
             {
-                ModelState.AddModelError("", "Last name is required");
-                return View();
-            }
-            if (string.IsNullOrWhiteSpace(createUser.emailAddress))
-            {
-                ModelState.AddModelError("", "Email address is required");
-                return View();
-            }
-            if (string.IsNullOrWhiteSpace(createUser.Username))
-            {
-                ModelState.AddModelError("", "Username is required");
-                return View();
-            }
-            if (string.IsNullOrWhiteSpace(createUser.Password))
-            {
-                ModelState.AddModelError("", "Password is required");
-                return View();
+                if (context.Users.Any(row => row.Username.Equals(newUser.Username)))
+                {
+                    ModelState.AddModelError("", "Username '" + newUser.Username + "' already exists. Try again.");
+                    newUser.Username = "";
+                    return View(newUser);
+                }
+
+                User newUserDTO = new Models.Data.User()
+                {
+                    FirstName = newUser.FirstName,
+                    LastName = newUser.LastName,
+                    EmailAddress = newUser.EmailAddress,
+                    IsActive = true,
+                    IsAdmin = false,
+                    Username = newUser.Username,
+                    Password = newUser.Password,
+                    DateCreated = DateTime.Now,
+                    DateModified = DateTime.Now
+                };
+
+                newUserDTO = context.Users.Add(newUserDTO);
+
+                context.SaveChanges();
+
 
             }
-            if (string.IsNullOrWhiteSpace(createUser.PasswordConfirm))
-            {
-                ModelState.AddModelError("", "Password Confirmation is required");
-                return View();
 
-            }
-            if (createUser.PasswordConfirm != createUser.Password)
-            {
-                ModelState.AddModelError("", "Oops! Password does not match password confirmation.");
-                return View();
-            }
-            return Content("Hello " + createUser.firstName + " " + createUser.lastName + 
-                "! Welcome to our site. " + "Username:" + createUser.Username + "Password: " +
-                createUser.Password + "Email: " + createUser.emailAddress
-                );
+            return RedirectToAction("login");
+
         }
         /// <summary>
         /// Logging users into the web site
