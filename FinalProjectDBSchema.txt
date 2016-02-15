@@ -1,0 +1,36 @@
+Ryan Pecor Final Project DB Schema
+
+Table 1(user):
+ First Name
+ Last Name
+ Job Title
+ Company Name
+ Email Address
+ Password
+ IsAdmin
+ Date Created
+
+Table 2 (sessions):
+ Title
+ Description
+ Presenter Name
+ Room
+ Address
+ Time
+ Occupancy
+ Date Created
+ 
+
+DBO:
+ FirstName, VarChar400
+ LastName, VarChar400
+ EmailAddress, VarChar400
+ IsAdmin, Bool
+ Username, VarChar400
+ Password, VarChar400
+ DateCreated, DateTime
+ JobTitle, VarChar400
+ Time, DateTime
+ Description, VarChar400
+ Room, VarChar400
+ Address, VarChar400

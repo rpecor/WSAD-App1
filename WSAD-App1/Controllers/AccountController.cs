@@ -60,7 +60,8 @@ namespace WSAD_App1.Controllers
                     Username = newUser.Username,
                     Password = newUser.Password,
                     DateCreated = DateTime.Now,
-                    DateModified = DateTime.Now
+                    DateModified = DateTime.Now,
+                    Gender = newUser.Gender
                 };
 
                 newUserDTO = context.Users.Add(newUserDTO);
@@ -134,6 +135,177 @@ namespace WSAD_App1.Controllers
             }
             
         }
-      
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+
+            return RedirectToAction("Login");
+        }
+
+        public ActionResult UserNavPartial()
+        {
+            //capture logged in user
+            string username;
+            username = this.User.Identity.Name;
+            //get user information from database
+
+            UserNavPartialViewModel userNavVM;
+
+            using (WSADDbContext context = new WSADDbContext())
+            {
+                //search for user
+                Models.Data.User userDTO = context.Users.FirstOrDefault(x => x.Username == username);
+
+                if (userDTO == null) { return Content(""); }
+                //Build  our UserNavPartialViewModel
+                userNavVM = new UserNavPartialViewModel()
+                {
+                    FirstName = userDTO.FirstName,
+                    LastName  = userDTO.LastName,
+                    id = userDTO.Id
+                
+                };
+                
+            }
+                //send the view model to the partial view
+                return PartialView(userNavVM);
+        }
+
+        public ActionResult UserProfile()
+        {
+            //capture logged in user
+            string username = User.Identity.Name;
+            //Retreive the user from database
+            UserProfileViewModel profileVM;
+            using (WSADDbContext context = new WSADDbContext())
+            {
+                // get user from DB
+                User userDTO = context.Users.FirstOrDefault(row => row.Username == username);
+
+                if (userDTO == null)
+                {
+                    return Content("Invalid Username");
+                }
+
+                // populate our userprofileviewmodel
+                profileVM = new UserProfileViewModel()
+                {
+                    DateCreated = userDTO.DateCreated,
+                    EmailAddress = userDTO.EmailAddress,
+                    FirstName = userDTO.FirstName,
+                    //Gender = userDTO.Gender,
+                    Id = userDTO.Id,
+                    IsAdmin = userDTO.IsAdmin,
+                    LastName = userDTO.LastName,
+                    UserName = userDTO.Username
+                };
+            }
+                
+
+                return View(profileVM);
+
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            // get user by id
+            EditViewModel editVM;
+            using (WSADDbContext context = new WSADDbContext())
+            {
+                //get user from DB
+                User userDTO = context.Users.Find(id);
+
+                //create a editviewmodel
+                if (userDTO == null)
+                {
+                    return Content("Invalid Id");
+                }
+                //send viewmodel to the view
+                editVM = new EditViewModel()
+                {
+                    EmailAddress = userDTO.EmailAddress,
+                    FirstName = userDTO.FirstName,
+                    LastName = userDTO.LastName,
+                    Id = userDTO.Id,
+                    UserName = userDTO.Username,
+                    Gender = userDTO.Gender
+
+                };
+
+            }
+
+            //send viewmodel to the view
+            return View(editVM);
+        }
+        [HttpPost]
+        public ActionResult Edit(EditViewModel editVM)
+        {
+            //Variables
+            bool needsPasswordReset = false;
+            bool usernameHasChanged = false;
+            //validate Model
+            if (!ModelState.IsValid)
+            {
+                return View(editVM);
+            }
+
+            //check for password change?
+            if (!string.IsNullOrWhiteSpace(editVM.Password))
+            {
+                //compare password and passwordconfirm
+                if (editVM.Password != editVM.PasswordConfirm)
+                {
+                    ModelState.AddModelError("", "Password and password confirm must match.");
+                    return View(editVM);
+                }
+                else
+                {
+                    needsPasswordReset = true;
+                }
+            }
+
+
+            //get our user from DB
+            using (WSADDbContext context = new WSADDbContext())
+
+            {
+                User userDTO = context.Users.Find(editVM.Id);
+                if (userDTO == null) { return Content("Invalid user Id"); }
+                //check for username change
+                if (userDTO.Username != editVM.UserName)
+                {
+                    userDTO.Username = editVM.UserName;
+
+                    usernameHasChanged = true;
+                }
+
+                //set update values from viewmodel
+                userDTO.FirstName = editVM.FirstName;
+                userDTO.LastName = editVM.LastName;
+                userDTO.DateModified = DateTime.Now;
+                userDTO.EmailAddress = editVM.EmailAddress;
+                userDTO.Gender = editVM.Gender;
+                
+
+                if (needsPasswordReset)
+                {
+                    userDTO.Password = editVM.Password;
+                }
+
+
+                //save changes
+                context.SaveChanges();
+
+            }
+
+            if (usernameHasChanged || needsPasswordReset)
+            {
+                TempData["LogoutMessage"] = "After a username or password change. Please log in with the new credentials.";
+                return RedirectToAction("Logout");
+            }
+                return RedirectToAction("UserProfile");
+        }
     }
 }

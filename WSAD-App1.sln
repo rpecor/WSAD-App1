@@ -5,6 +5,11 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WSAD-App1", "WSAD-App1\WSAD-App1.csproj", "{B1D0FB46-BC71-4C93-9DEC-04E6CB5A2CD0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B9E79871-8642-405B-BEE8-CEBABE0F7D3E}"
+	ProjectSection(SolutionItems) = preProject
+		FinalProjectDBSchema.txt = FinalProjectDBSchema.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

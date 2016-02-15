@@ -5,6 +5,14 @@
 
 <h2>Login</h2>
 @Html.ValidationSummary()
+
+@if (TempData["LogoutMessage"] != null)
+{
+    <div class="alert alert-warning">
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        @TempData["LogoutMessage"]
+        </div>
+} 
 <form method="post" action="/Account/Login">
     
     <label>Username: </label><input type="text" name="username" /><br />
