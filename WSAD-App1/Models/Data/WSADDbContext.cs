@@ -9,5 +9,6 @@ namespace WSAD_App1.Models.Data
     public class WSADDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Session> Sessions { get; set; }
     }
 }

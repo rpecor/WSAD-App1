@@ -15,9 +15,9 @@ Table 2 (sessions):
  Description
  Presenter Name
  Room
- Address
  Time
  Occupancy
+ Current Enrolment 
  Date Created
  
 
