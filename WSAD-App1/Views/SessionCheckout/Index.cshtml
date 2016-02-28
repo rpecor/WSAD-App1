@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WSAD_App1.Models.ViewModels.SessionSignup.SessionSignupViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>My Schedule</h2>
+
+<p>
+    @Html.ActionLink("Signup for more events", "Index", "Session")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Session
+        </th>
+        <th>
+            Session Time
+        </th>
+        
+        <th>
+            Room 
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <b>@Html.DisplayFor(modelItem => item.Session.Title)</b><br />
+            @Html.DisplayFor(modelItem => item.Session.Presenter)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Session.Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Session.Room)
+        </td>
+        <td>
+            @Html.ActionLink("Remove Session", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

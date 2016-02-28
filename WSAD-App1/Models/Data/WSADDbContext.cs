@@ -10,5 +10,7 @@ namespace WSAD_App1.Models.Data
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<SessionSignup> SessionSignup { get; set; }
+
     }
 }
