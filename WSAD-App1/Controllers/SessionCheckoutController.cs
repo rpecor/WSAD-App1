@@ -106,5 +106,20 @@ namespace WSAD_App1.Controllers
             return RedirectToAction("Index");
 
         }
+        [HttpPost]
+        public ActionResult Delete(List<SessionSignupViewModel> sessionsToAdd)
+        {
+            var vmItemsToDelete = sessionsToAdd.Where(x => x.IsSelected == true);
+            using (WSADDbContext context = new WSADDbContext())
+            {
+                foreach (var vmItems in vmItemsToDelete)
+                {
+                    var dtoToDelete = context.SessionSignup.FirstOrDefault(row => row.Id == vmItems.Id);
+                    context.SessionSignup.Remove(dtoToDelete);
+                }
+                context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

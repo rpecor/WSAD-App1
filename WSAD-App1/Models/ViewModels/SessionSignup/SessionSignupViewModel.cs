@@ -27,5 +27,6 @@ namespace WSAD_App1.Models.ViewModels.SessionSignup
         public int SessionId { get; set; }
         public int Quantity { get; set; }
         public SessionViewModel Session { get; set; }
+        public bool IsSelected { get; set; }
     }
 }
