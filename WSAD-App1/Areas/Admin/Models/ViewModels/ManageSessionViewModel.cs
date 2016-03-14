@@ -4,14 +4,16 @@ using System.Linq;
 using System.Web;
 using WSAD_App1.Models.Data;
 
-namespace WSAD_App1.Models.ViewModels.ManageSessions
+namespace WSAD_App1.Areas.Admin.Models.ViewModels.ManageSessions
 {
     public class ManageSessionViewModel
     {
+
         public ManageSessionViewModel()
         {
 
         }
+
         public ManageSessionViewModel(Session sessionDTO)
         {
             Id = sessionDTO.Id;
@@ -22,8 +24,8 @@ namespace WSAD_App1.Models.ViewModels.ManageSessions
             Time = sessionDTO.Time;
             Occupancy = sessionDTO.Occupancy;
             CurrentEnrollment = sessionDTO.CurrentEnrollment;
-
         }
+
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

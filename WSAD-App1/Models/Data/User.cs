@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
+
 namespace WSAD_App1.Models.Data
 {
     [Table("tblUser")]
@@ -23,5 +24,7 @@ namespace WSAD_App1.Models.Data
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public string Gender { get; set; }
+
+        
     }
 }

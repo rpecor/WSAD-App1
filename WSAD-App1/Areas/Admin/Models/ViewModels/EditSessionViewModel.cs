@@ -1,25 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Web;
 
-namespace WSAD_App1.Models.Data
+namespace WSAD_App1.Areas.Admin.Models.ViewModels
 {
-    [Table("tblSession")]
-    public class Session
+    public class EditSessionViewModel
     {
-   
-        [Key]
+        [Required]
         public int Id { get; set; }
-
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public string Presenter { get; set; }
+        [Required]
         public string Room { get; set; }
-        public DateTime Time { get; set; }
-        public DateTime DateCreated { get; set; }
-        public int Occupancy { get; set; }
-        public int CurrentEnrollment { get; set; }
 
-       
+        [DataType(DataType.Date)]
+
+
+        public DateTime Time { get; set; }
+        [Required]
+        public int Occupancy { get; set; }
     }
 }

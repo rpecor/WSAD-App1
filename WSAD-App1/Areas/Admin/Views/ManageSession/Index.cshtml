@@ -1,0 +1,87 @@
+﻿@model List<WSAD_App1.Areas.Admin.Models.ViewModels.ManageSessions.ManageSessionViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Manage Sessions</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm("Delete", "ManageSession"))
+{
+    
+<table class="table">
+    <tr>
+        <th>
+            &nbsp;
+        </th>
+        <th>
+           Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Presenter
+        </th>
+        <th>
+            Room
+        </th>
+        <th>
+            Time
+        </th>
+        <th>
+            Occupancy
+        </th>
+        <th>
+            Current Enrollment
+        </th>
+        <th></th>
+    </tr>
+
+@*@foreach (var item in Model) *@
+
+@for (int i = 0;i<Model.Count; i++)
+{
+    var item = Model[i];
+    <tr>
+        <td>
+            @Html.HiddenFor(x => Model[i].Id)
+            @Html.CheckBoxFor(x => Model[i].IsSelected)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Presenter)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Room)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Occupancy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentEnrollment)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id })  
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            
+        </td>
+    </tr>
+}
+
+</table>
+
+    <button type="submit" class="btn btn-danger">Delete Sessions</button>
+}
