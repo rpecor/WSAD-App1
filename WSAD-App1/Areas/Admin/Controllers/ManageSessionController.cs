@@ -9,6 +9,7 @@ using WSAD_App1.Models.Data;
 
 namespace WSAD_App1.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ManageSessionController : Controller
     {
         // GET: ManageSession
