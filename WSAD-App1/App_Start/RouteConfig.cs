@@ -12,7 +12,7 @@ namespace WSAD_App1
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            
             routes.MapRoute(
                     name: "Login",
                     url: "login",
@@ -25,6 +25,7 @@ namespace WSAD_App1
                     defaults: new { controller = "Account", action = "Logout" }
 
                 );
+            
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

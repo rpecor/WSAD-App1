@@ -157,8 +157,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManageUsersController.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\CreateSessionViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\EditSessionViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModels\ManageUser\ManageUserViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CorrespondenceController.cs" />
     <Compile Include="Controllers\HelloWorldController.cs" />
@@ -209,6 +211,7 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\ManageSession\Create.cshtml" />
     <Content Include="Areas\Admin\Views\ManageSession\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageUsers\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -21,17 +21,17 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Session Signup", "Index", "Session", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("View Schedule", "Index", "SessionCheckout", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Manage Sessions", "Index", "ManageSession", new { area = "admin" }, null)</li>
+                    <li>@Html.ActionLink("Manage Users", "Index", "ManageUsers", new { area = "admin" }, null)</li>
                 </ul> 
                 <ul class="nav navbar-nav navbar-right">
                     @if (Request.IsAuthenticated)
                     {
 
                         <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, null)</li>
-                            <li>@Html.Action("UserNavPartial", "Account", new { area = "" }) </li>
+                            <li>@Html.Action("UserNavPartial", "Account", new { area = "" } ) </li>
 
                     }
                     else
