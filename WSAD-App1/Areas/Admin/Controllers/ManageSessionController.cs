@@ -167,8 +167,25 @@ namespace WSAD_App1.Areas.Admin.Controllers
 
             return RedirectToAction("index");
         }
-        
 
+        public ActionResult SessionListByUser(int userId)
+        {
+            List<SessionSignup> usersSessions;
+            //get orders and list them to the user
+            using (WSADDbContext context = new WSADDbContext())
+            {
+                usersSessions = context.SessionSignup.Include("session").Where(row => row.UserId == userId).ToList();
+            }
+
+            //convert to ViewModel
+            List<SessionListByUserViewModel> sessionListVMs =
+                usersSessions.Select(userOdr => new SessionListByUserViewModel(userOdr))
+                .ToList();
+
+                return View(sessionListVMs);
+        }
+
+        
     
     }
 }

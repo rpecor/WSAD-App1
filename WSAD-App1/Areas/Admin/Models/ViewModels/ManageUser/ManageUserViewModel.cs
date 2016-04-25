@@ -34,5 +34,6 @@ namespace WSAD_App1.Areas.Admin.Models.ViewModels.ManageUser
         public bool IsAdmin { get; set; }
         public string Gender { get; set; }
         public DateTime DateCreated { get; set; }
+        public bool IsSelected { get; set; }
     }
 }

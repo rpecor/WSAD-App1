@@ -16,15 +16,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Pecor App", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Conference Scheduler", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Session Signup", "Index", "Session", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("View Schedule", "Index", "SessionCheckout", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Manage Sessions", "Index", "ManageSession", new { area = "admin" }, null)</li>
-                    <li>@Html.ActionLink("Manage Users", "Index", "ManageUsers", new { area = "admin" }, null)</li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Manage Sessions", "Index", "ManageSession", new { area = "admin" }, null)</li>
+                            <li>@Html.ActionLink("Manage Users", "Index", "ManageUsers", new { area = "admin" }, null)</li>
+                          </ul>
+                        </li>
+                    }
                 </ul> 
                 <ul class="nav navbar-nav navbar-right">
                     @if (Request.IsAuthenticated)
@@ -50,7 +58,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Ryans BIG ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Conference Scheduler</p>
         </footer>
     </div>
 
